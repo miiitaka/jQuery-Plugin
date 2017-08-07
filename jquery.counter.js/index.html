@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Count Up</title>
+  <style>
+    #counter {
+      font-size: 50px;
+      font-family: "Helvetica";
+      display: block;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="jquery.counter.js"></script>
+  <script>
+    $(function(){
+      $('#start').on('click', function(){
+        $('#counter').counter({
+          'start': 0,
+          'end': 1000,
+          'easing': 'swing',
+          'duration': 1500
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+<span id="counter">0</span>
+<input type="button" id="start" value="START">
+</body>
+</html>
