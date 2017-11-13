@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Word Animation</title>
+  <style>
+    /**
+     * Home Template section movie animation
+     */
+    .word-wrapper {
+      bottom: 0;
+      height: 8rem;
+      margin: auto;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 600px;
+    }
+
+    .word-list {
+      color: #fff;
+      height: 8rem;
+      position: relative;
+    }
+
+    .word {
+      font-size: 8rem;
+      margin: -15px 0 0 0;
+      opacity: 0;
+      position: absolute;
+      text-align: center;
+      width: 300px;
+      transform: perspective(0);
+      -webkit-transform: perspective(0);
+    }
+
+    .letter {
+      display: inline-block;
+      position: relative;
+      transform: translateZ(25px);
+      -webkit-transform: translateZ(25px);
+      transform-origin: 50% 50% 25px;
+      -webkit-transform-origin: 50% 50% 25px;
+    }
+
+    .out {
+      transform: rotateX(90deg);
+      -webkit-transform: rotateX(90deg);
+      transition: transform .32s cubic-bezier(.55, .055, .675, .19);
+      -webkit-transition: transform 0.32s cubic-bezier(.55, .055, .675, .19);
+    }
+
+    .behind {
+      transform: rotateX(-90deg);
+      -webkit-transform: rotateX(-90deg);
+    }
+
+    .in {
+      transform: rotateX(0deg);
+      -webkit-transform: rotateX(0deg);
+      transition: transform .38s cubic-bezier(.175, .885, .32, 1.275);
+      -webkit-transition: transform .38s cubic-bezier(.175, .885, .32, 1.275);
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+    (function($) {
+      $(function(){
+        var
+          elmWords = $('.word'),
+          arrWords = [],
+          currentWord = 0;
+
+        $(elmWords[0]).css("opacity", 1);
+
+        elmWords.each(function(i, elem){
+          var
+            content = $(elem).text(),
+            letters = [];
+
+          $(elem).text('');
+
+          for (var j = 0; j < content.length; j++) {
+            var letter = $(document.createElement('span')).addClass('letter').text(content.charAt(j));
+            $(elem).append(letter);
+            letters.push(letter);
+          }
+          arrWords.push(letters);
+        });
+
+        function changeWord() {
+          var
+            cw = arrWords[currentWord],
+            nw = '';
+
+          if (currentWord === elmWords.length - 1) {
+            nw = arrWords[0]
+          } else {
+            nw = arrWords[currentWord + 1];
+          }
+
+          for (var i = 0; i < cw.length; i++) {
+            animateLetterOut(cw, i);
+          }
+
+          for (var j = 0; j < nw.length; j++) {
+            $(nw[j]).removeClass().addClass('letter behind');
+            $(nw[0]).closest('.word').css("opacity", 1);
+            animateLetterIn(nw, j);
+          }
+
+          if (currentWord === arrWords.length - 1) {
+            currentWord = 0
+          } else {
+            currentWord++;
+          }
+        }
+
+        function animateLetterOut(cw, i) {
+          setTimeout(function() {
+            $(cw[i]).removeClass().addClass('letter out');
+          }, i * 80);
+        }
+
+        function animateLetterIn(nw, i) {
+          setTimeout(function() {
+            $(nw[i]).removeClass().addClass('letter in');
+          }, 340 + (i * 80));
+        }
+
+        changeWord();
+        setInterval(changeWord, 4000);
+      });
+    })(jQuery);
+  </script>
+</head>
+<body>
+<div class="word-wrapper">
+  <div class="word-list">
+    <span class="word">system</span>
+    <span class="word">city</span>
+    <span class="word">fashion</span>
+    <span class="word">creative</span>
+    <span class="word">thing</span>
+  </div>
+</div>
+</body>
+</html>
