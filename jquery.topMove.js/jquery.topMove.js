@@ -19,9 +19,9 @@
 
       $(window).on('scroll', function () {
         if ($(this).scrollTop() > settings.scroll) {
-          self.fadeIn();
+          self.not(":animated").fadeIn();
         } else {
-          self.fadeOut();
+          self.not(":animated").fadeOut();
         }
       });
     });
