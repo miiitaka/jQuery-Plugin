@@ -21,7 +21,7 @@
           search: null
         }
       },
-      url: "https://api.instagram.com/v1/",
+      url: "https://api.instagram.com/v1/"
     },
     settings = $.extend({}, defaults, options),
     request = createParam(settings);
